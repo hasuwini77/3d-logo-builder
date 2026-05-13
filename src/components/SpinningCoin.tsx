@@ -9,8 +9,6 @@ import {
   CanvasTexture,
   SRGBColorSpace,
   LinearSRGBColorSpace,
-  BufferGeometry,
-  Float32BufferAttribute,
 } from 'three'
 import { extractPerimeter } from '../utils/perimeter'
 import { buildRim } from '../utils/rim'

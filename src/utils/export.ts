@@ -82,7 +82,8 @@ export async function exportAnimatedWebP(
       ])
 
       const outputData = await ffmpeg.readFile('output.webp')
-      downloadBlob = new Blob([outputData], { type: 'image/webp' })
+      const bytes = outputData instanceof Uint8Array ? new Uint8Array(outputData) : new TextEncoder().encode(outputData as string)
+      downloadBlob = new Blob([bytes], { type: 'image/webp' })
       filename = 'logo-3d.webp'
       await ffmpeg.deleteFile('input.webm')
       await ffmpeg.deleteFile('output.webp')

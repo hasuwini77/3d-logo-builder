@@ -3,7 +3,6 @@ import {
   CanvasTexture,
   SRGBColorSpace,
   LinearSRGBColorSpace,
-  TextureLoader,
 } from 'three'
 
 interface LogoTextures {
