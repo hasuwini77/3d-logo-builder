@@ -23,6 +23,7 @@ export interface CoinSettings {
   rimColor: string
   rimEmissive: string
   environment: 'warehouse' | 'studio' | 'city' | 'night' | 'dawn' | 'sunset'
+  hasText: boolean
 }
 
 export const DEFAULT_SETTINGS: CoinSettings = {
@@ -33,6 +34,7 @@ export const DEFAULT_SETTINGS: CoinSettings = {
   rimColor: '#8ecae6',
   rimEmissive: '#06b6d4',
   environment: 'warehouse',
+  hasText: true,
 }
 
 export interface CoinHandle {
@@ -155,7 +157,7 @@ function CoinMesh({ imageUrl, settings, handle }: CoinMeshProps) {
           depthWrite={false}
         />
       </mesh>
-      <mesh position={[0, 0, -half]} rotation={[0, Math.PI, 0]}>
+      <mesh position={[0, 0, -half]} rotation={[0, Math.PI, 0]} scale={settings.hasText ? [1, 1, 1] : [-1, 1, 1]}>
         <planeGeometry args={[PLANE_SIZE, PLANE_SIZE]} />
         <meshStandardMaterial
           map={processed.colorTexture}

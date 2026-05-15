@@ -12,8 +12,7 @@ export function extractPerimeter(
 
   // Find the longest contour using marching squares
   const contour = marchingSquares(grid, width, height)
-  if (contour.length < 3) {
-    // Fallback to simple bounding box if marching squares fails
+  if (contour.length < 3 || !validateContour(contour, width, height)) {
     return fallbackPerimeter(grid, width, height)
   }
 
@@ -60,7 +59,7 @@ function marchingSquares(
   let cx = startX - 1
   let cy = startY - 1
   let prevDir = 0 // 0=right, 1=down, 2=left, 3=up
-  const maxSteps = (width + height) * 4
+  const maxSteps = 2 * (width + height) * 8
 
   for (let step = 0; step < maxSteps; step++) {
     // Compute the 2x2 cell configuration
@@ -158,6 +157,23 @@ function perpendicularDistance(
     return Math.sqrt(ex * ex + ey * ey)
   }
   return Math.abs(dy * point[0] - dx * point[1] + end[0] * start[1] - end[1] * start[0]) / Math.sqrt(lenSq)
+}
+
+function validateContour(
+  contour: [number, number][],
+  width: number,
+  height: number
+): boolean {
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+  for (const [x, y] of contour) {
+    if (x < minX) minX = x
+    if (x > maxX) maxX = x
+    if (y < minY) minY = y
+    if (y > maxY) maxY = y
+  }
+  const coverageX = (maxX - minX) / width
+  const coverageY = (maxY - minY) / height
+  return coverageX > 0.15 && coverageY > 0.15
 }
 
 function fallbackPerimeter(

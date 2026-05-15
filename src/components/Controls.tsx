@@ -87,6 +87,24 @@ export default function Controls({ settings, onChange, disabled }: ControlsProps
         </div>
       </div>
 
+      {/* Text mode */}
+      <div className="mb-5">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={settings.hasText}
+            onChange={(e) => update({ hasText: e.target.checked })}
+            className="accent-cyan-500 w-4 h-4"
+          />
+          <span className="text-sm text-neutral-400">Logo has text</span>
+        </label>
+        <p className="text-[11px] text-neutral-600 mt-1 ml-6">
+          {settings.hasText
+            ? 'Text stays readable on both sides'
+            : 'Back shows natural mirror, like a real coin'}
+        </p>
+      </div>
+
       {/* Advanced toggle */}
       <button
         onClick={() => setShowAdvanced(!showAdvanced)}

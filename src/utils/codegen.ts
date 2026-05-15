@@ -22,6 +22,7 @@ const EMBOSS_STRENGTH = ${settings.embossStrength}
 const RIM_COLOR = '${settings.rimColor}'
 const RIM_EMISSIVE = '${settings.rimEmissive}'
 const ENVIRONMENT = '${settings.environment}'
+const HAS_TEXT = ${settings.hasText}
 
 // --- Embedded logo (base64) ---
 const LOGO_SRC = '${imageDataUrl}'
@@ -35,7 +36,7 @@ function extractPerimeter(data: Uint8ClampedArray, w: number, h: number): [numbe
   if (sx === -1) return []
   const pts: [number, number][] = []
   let cx = sx - 1, cy = sy - 1, pd = 0
-  for (let s = 0; s < (w + h) * 4; s++) {
+  for (let s = 0; s < 2 * (w + h) * 8; s++) {
     const c = (sample(cx, cy) << 3) | (sample(cx+1, cy) << 2) | (sample(cx+1, cy+1) << 1) | sample(cx, cy+1)
     pts.push([cx + 1, cy + 1])
     let nd: number
@@ -128,7 +129,7 @@ function Coin() {
       <mesh position={[0,0,half]}><planeGeometry args={[PLANE_SIZE,PLANE_SIZE]} />
         <meshStandardMaterial map={processed.colorTex} normalMap={processed.normalMap} normalScale={emboss}
           metalness={0.15} roughness={0.35} envMapIntensity={0.4} side={FrontSide} transparent depthWrite={false} /></mesh>
-      <mesh position={[0,0,-half]} rotation={[0,Math.PI,0]}><planeGeometry args={[PLANE_SIZE,PLANE_SIZE]} />
+      <mesh position={[0,0,-half]} rotation={[0,Math.PI,0]} scale={HAS_TEXT ? [1,1,1] : [-1,1,1]}><planeGeometry args={[PLANE_SIZE,PLANE_SIZE]} />
         <meshStandardMaterial map={processed.colorTex} normalMap={processed.normalMap} normalScale={emboss}
           metalness={0.15} roughness={0.35} envMapIntensity={0.4} side={FrontSide} transparent depthWrite={false} /></mesh>
       <mesh geometry={processed.rimGeo}>
