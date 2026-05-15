@@ -7,6 +7,7 @@ import SpinningCoin, {
 import UploadZone from './components/UploadZone'
 import Controls from './components/Controls'
 import ExportButton from './components/ExportButton'
+import CodeExport from './components/CodeExport'
 
 export default function App() {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
@@ -78,6 +79,11 @@ export default function App() {
             coinRef={coinRef}
             disabled={!imageUrl}
             onExportStateChange={setExporting}
+          />
+          <CodeExport
+            imageUrl={imageUrl}
+            settings={settings}
+            disabled={exporting}
           />
         </div>
       </main>
